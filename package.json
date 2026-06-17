@@ -18,7 +18,10 @@
       }
     }
   },
-  "files": ["dist", "README.md"],
+  "files": [
+    "dist",
+    "README.md"
+  ],
   "scripts": {
     "build": "vite build && tsc --emitDeclarationOnly",
     "test": "vitest run",
@@ -49,15 +52,15 @@
     "react": "^18.0.0 || ^19.0.0"
   },
   "devDependencies": {
-    "@biomejs/biome": "^1.9.0",
-    "@types/node": "^22.0.0",
-    "@types/react": "^19.0.0",
-    "react": "^19.0.0",
+    "@biomejs/biome": "^2.5.0",
+    "@types/node": "^25.9.3",
+    "@types/react": "^19.2.17",
+    "react": "^19.2.7",
     "simple-git-hooks": "^2.13.1",
     "typescript": "6.0.3",
-    "vite": "^6.0.0",
-    "vite-plugin-dts": "^4.0.0",
-    "vitest": "^3.2.6"
+    "vite": "^8.0.16",
+    "vite-plugin-dts": "^5.0.2",
+    "vitest": "^4.1.9"
   },
   "engines": {
     "node": ">=22.0.0"
