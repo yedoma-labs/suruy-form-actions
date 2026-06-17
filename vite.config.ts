@@ -18,7 +18,7 @@ export default defineConfig({
       },
     },
     sourcemap: true,
-    minify: "esbuild",
+    minify: "oxc",
     target: "es2022",
   },
   test: {
