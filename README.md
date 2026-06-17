@@ -9,7 +9,7 @@
 [![npm version](https://img.shields.io/npm/v/@yedoma-labs/suruy-form-actions)](https://www.npmjs.com/package/@yedoma-labs/suruy-form-actions)
 [![npm downloads](https://img.shields.io/npm/dm/@yedoma-labs/suruy-form-actions)](https://www.npmjs.com/package/@yedoma-labs/suruy-form-actions)
 [![Node.js](https://img.shields.io/node/v/@yedoma-labs/suruy-form-actions)](https://www.npmjs.com/package/@yedoma-labs/suruy-form-actions)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.x+-3178C6?logo=typescript&logoColor=white)](tsconfig.json)
+[![TypeScript](https://img.shields.io/badge/TypeScript-6.x+-3178C6?logo=typescript&logoColor=white)](tsconfig.json)
 [![License](https://img.shields.io/npm/l/@yedoma-labs/suruy-form-actions)](LICENSE)
 [![Bundle Size](https://img.shields.io/bundlephobia/minzip/@yedoma-labs/suruy-form-actions)](https://bundlephobia.com/package/@yedoma-labs/suruy-form-actions)
 
