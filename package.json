@@ -1,6 +1,6 @@
 {
   "name": "@yedoma-labs/suruy-form-actions",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Type-safe form library for React Server Actions with progressive enhancement",
   "type": "module",
   "main": "./dist/index.cjs",

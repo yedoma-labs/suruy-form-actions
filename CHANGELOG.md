@@ -1,3 +1,11 @@
+## [0.1.1](https://github.com/yedoma-labs/suruy-form-actions/compare/v0.1.0...v0.1.1) (2026-10-10)
+
+
+### Bug Fixes
+
+* collapse files array in package.json to satisfy biome formatter ([f1a2b4a](https://github.com/yedoma-labs/suruy-form-actions/commit/f1a2b4a62d38efa3af20b8b427fba43702950d63))
+* switch vite minifier from esbuild to oxc ([b039f84](https://github.com/yedoma-labs/suruy-form-actions/commit/b039f84bf115267afe4b521f930bb98c3dc96785))
+
 # Changelog
 
 All notable changes to this project will be documented in this file.
