@@ -12,22 +12,22 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
-      
+
       - uses: pnpm/action-setup@v6
         with:
-          version: 12.14.0
-      
+          version: 12.15.0
+
       - uses: actions/setup-node@v7
         with:
           node-version: 24
-          cache: 'pnpm'
-      
+          cache: "pnpm"
+
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
-      
+
       - name: Lint
         run: pnpm lint
-      
+
       - name: Type check
         run: pnpm typecheck
 
@@ -36,19 +36,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
-      
+
       - uses: pnpm/action-setup@v6
         with:
-          version: 12.14.0
-      
+          version: 12.15.0
+
       - uses: actions/setup-node@v7
         with:
           node-version: 24
-          cache: 'pnpm'
-      
+          cache: "pnpm"
+
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
-      
+
       - name: Run tests
         run: pnpm test
 
@@ -58,21 +58,21 @@ jobs:
     needs: [lint, test]
     steps:
       - uses: actions/checkout@v7
-      
+
       - uses: pnpm/action-setup@v6
         with:
-          version: 12.14.0
-      
+          version: 12.15.0
+
       - uses: actions/setup-node@v7
         with:
           node-version: 24
-          cache: 'pnpm'
-      
+          cache: "pnpm"
+
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
-      
+
       - name: Build
         run: pnpm build
-      
+
       - name: Check bundle size
         run: ls -lh dist/
