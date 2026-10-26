@@ -53,13 +53,13 @@ export const loginAction = createFormAction(
   async (data) => {
     // Your business logic here
     const user = await db.user.findUnique({ where: { email: data.email } });
-    
+
     if (!user) {
       return { success: false, errors: { email: ["User not found"] } };
     }
 
     return { success: true, data: { userId: user.id } };
-  }
+  },
 );
 ```
 
@@ -85,26 +85,20 @@ export default function LoginPage() {
       <div>
         <label htmlFor="email">Email</label>
         <input id="email" name="email" type="email" required />
-        {state.errors?.email && (
-          <span role="alert">{state.errors.email[0]}</span>
-        )}
+        {state.errors?.email && <span role="alert">{state.errors.email[0]}</span>}
       </div>
 
       <div>
         <label htmlFor="password">Password</label>
         <input id="password" name="password" type="password" required />
-        {state.errors?.password && (
-          <span role="alert">{state.errors.password[0]}</span>
-        )}
+        {state.errors?.password && <span role="alert">{state.errors.password[0]}</span>}
       </div>
 
       <button type="submit" disabled={pending}>
         {pending ? "Logging in..." : "Log in"}
       </button>
 
-      {state.errors?._form && (
-        <div role="alert">{state.errors._form[0]}</div>
-      )}
+      {state.errors?._form && <div role="alert">{state.errors._form[0]}</div>}
     </form>
   );
 }
@@ -118,8 +112,8 @@ Create a type-safe form action with validation.
 
 ```tsx
 const action = createFormAction<Input, Output>(
-  validator,  // (formData: FormData) => Promise<ValidationResult>
-  handler     // (data: Input) => Promise<ActionResult<Output>>
+  validator, // (formData: FormData) => Promise<ValidationResult>
+  handler, // (data: Input) => Promise<ActionResult<Output>>
 );
 ```
 
@@ -211,14 +205,14 @@ const loginSchema = z.object({
 
 const validator = async (formData: FormData) => {
   const result = loginSchema.safeParse(Object.fromEntries(formData));
-  
+
   if (!result.success) {
     return {
       success: false,
       errors: result.error.flatten().fieldErrors,
     };
   }
-  
+
   return { success: true, data: result.data };
 };
 
@@ -236,7 +230,7 @@ Forms work without JavaScript by default:
 <form action={myAction}>
   <input name="email" type="email" required />
   <button>Submit</button>
-</form>
+</form>;
 ```
 
 The server will:
@@ -283,11 +277,11 @@ const registerSchema = schema<{
 ```tsx
 const uploadAction = createSimpleAction(async (formData) => {
   const file = formData.get("avatar") as File;
-  
+
   if (file.size > 5_000_000) {
     return { success: false, errors: { avatar: ["File too large"] } };
   }
-  
+
   const url = await uploadToS3(file);
   return { success: true, data: { url } };
 });
@@ -299,21 +293,21 @@ const uploadAction = createSimpleAction(async (formData) => {
 const { state, action, pending } = useFormAction(addTodoAction, {
   onSuccess: (data) => {
     // Optimistically add to UI
-    setTodos(prev => [...prev, data.todo]);
+    setTodos((prev) => [...prev, data.todo]);
   },
 });
 ```
 
 ## Why suruy-form-actions?
 
-| Feature | suruy-form-actions | React Hook Form | Formik | Conform |
-|---------|-----------|----------------|--------|---------|
-| Bundle size | ~3KB | 12KB | 44KB | 8KB |
-| Server Actions | ✅ | ⚠️ Manual | ❌ | ✅ |
-| Zero deps | ✅ | ✅ | ❌ | ✅ |
-| Progressive enhancement | ✅ | ❌ | ❌ | ✅ |
-| Built-in validator | ✅ | ❌ | ❌ | ❌ |
-| TypeScript | ✅ | ✅ | ✅ | ✅ |
+| Feature                 | suruy-form-actions | React Hook Form | Formik | Conform |
+| ----------------------- | ------------------ | --------------- | ------ | ------- |
+| Bundle size             | ~3KB               | 12KB            | 44KB   | 8KB     |
+| Server Actions          | ✅                 | ⚠️ Manual       | ❌     | ✅      |
+| Zero deps               | ✅                 | ✅              | ❌     | ✅      |
+| Progressive enhancement | ✅                 | ❌              | ❌     | ✅      |
+| Built-in validator      | ✅                 | ❌              | ❌     | ❌      |
+| TypeScript              | ✅                 | ✅              | ✅     | ✅      |
 
 ## Project Structure
 
