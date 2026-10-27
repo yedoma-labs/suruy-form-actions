@@ -213,3 +213,116 @@ describe("schema", () => {
     }
   });
 });
+
+describe("schema zero bounds", () => {
+  test("honors max: 0 for strings", () => {
+    const s = schema<{ note: string }>({
+      note: { type: "string", max: 0 },
+    });
+
+    const result = s.safeParse({ note: "abc" });
+    expect(result.success).toBe(false);
+    if (!result.success) {
+      expect(result.errors.note).toEqual(["Maximum length is 0"]);
+    }
+  });
+
+  test("honors min: 0 and max: 0 for numbers", () => {
+    const s = schema<{ n: number }>({
+      n: { type: "number", min: 0, max: 0 },
+    });
+
+    expect(s.safeParse({ n: "-1" }).success).toBe(false);
+    expect(s.safeParse({ n: "1" }).success).toBe(false);
+    expect(s.safeParse({ n: "0" }).success).toBe(true);
+  });
+});
+
+describe("schema.parse", () => {
+  test("works when destructured from the schema", () => {
+    const { parse } = schema<{ name: string }>({
+      name: { type: "string", required: true },
+    });
+
+    expect(parse({ name: "John" })).toEqual({ name: "John" });
+  });
+
+  test("throws when destructured and data is invalid", () => {
+    const { parse } = schema<{ name: string }>({
+      name: { type: "string", required: true },
+    });
+
+    expect(() => parse({})).toThrow("Validation failed");
+  });
+});
+
+describe("schema options (allowed values)", () => {
+  test("accepts a string value from options", () => {
+    const s = schema<{ plan: string }>({
+      plan: { type: "string", required: true, options: ["free", "pro"] },
+    });
+
+    const result = s.safeParse({ plan: "pro" });
+    expect(result.success).toBe(true);
+    if (result.success) {
+      expect(result.data.plan).toBe("pro");
+    }
+  });
+
+  test("rejects a string value outside options", () => {
+    const s = schema<{ plan: string }>({
+      plan: { type: "string", required: true, options: ["free", "pro"] },
+    });
+
+    const result = s.safeParse({ plan: "admin" });
+    expect(result.success).toBe(false);
+    if (!result.success) {
+      expect(result.errors.plan).toEqual(["Must be one of: free, pro"]);
+    }
+  });
+
+  test("matches numeric options as numbers", () => {
+    const s = schema<{ size: number }>({
+      size: { type: "number", required: true, options: [1, 2, 4] },
+    });
+
+    const valid = s.safeParse({ size: "4" });
+    expect(valid.success).toBe(true);
+    if (valid.success) {
+      expect(valid.data.size).toBe(4);
+    }
+
+    const invalid = s.safeParse({ size: "3" });
+    expect(invalid.success).toBe(false);
+    if (!invalid.success) {
+      expect(invalid.errors.size).toEqual(["Must be one of: 1, 2, 4"]);
+    }
+  });
+
+  test("skips options check for optional empty fields", () => {
+    const s = schema<{ plan?: string }>({
+      plan: { type: "string", options: ["free", "pro"] },
+    });
+
+    const result = s.safeParse({});
+    expect(result.success).toBe(true);
+  });
+
+  test("does not run custom validation after an options error", () => {
+    let customCalls = 0;
+    const s = schema<{ plan: string }>({
+      plan: {
+        type: "string",
+        options: ["free", "pro"],
+        custom: () => {
+          customCalls++;
+          return null;
+        },
+      },
+    });
+
+    const result = s.safeParse({ plan: "admin" });
+    expect(result.success).toBe(false);
+    expect(customCalls).toBe(0);
+  });
+});

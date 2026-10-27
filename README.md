@@ -179,7 +179,17 @@ const userSchema = schema<{ name: string; age: number }>({
 
 **Supported types:** `string`, `number`, `boolean`, `email`, `url`
 
-**Constraints:** `required`, `min`, `max`, `pattern` (regex), `custom` (function)
+**Constraints:** `required`, `min`, `max`, `pattern` (regex), `options` (allowed values), `custom` (function)
+
+`min` and `max` are honored when they are `0`. `options` applies to `string` and `number` fields and is checked before `custom`:
+
+```tsx
+const orderSchema = schema<{ plan: string; seats: number }>({
+  plan: { type: "string", required: true, options: ["free", "pro", "team"] },
+  seats: { type: "number", required: true, options: [1, 5, 10] },
+});
+// { plan: "admin" } -> errors.plan: ["Must be one of: free, pro, team"]
+```
 
 ### `parseFormData(formData)`
 

@@ -62,6 +62,8 @@ type FieldValidator<T> = {
   min?: number;
   max?: number;
   pattern?: RegExp;
+  /** Allowed values (for string and number fields, e.g. selects and radio groups) */
+  options?: readonly (string | number)[];
   custom?: (value: T) => string | null;
 };
 
@@ -71,9 +73,10 @@ type FieldValidator<T> = {
 export function schema<T extends Record<string, unknown>>(
   fields: Record<keyof T, FieldValidator<unknown>>,
 ): Schema<T> {
-  return {
+  const schemaObject: Schema<T> = {
     parse(data: unknown): T {
-      const result = this.safeParse(data);
+      // Reference the schema object instead of `this`, so parse can be destructured
+      const result = schemaObject.safeParse(data);
       if (!result.success) {
         throw new Error(`Validation failed: ${JSON.stringify(result.errors)}`);
       }
@@ -118,10 +121,10 @@ export function schema<T extends Record<string, unknown>>(
             typedValue = strValue;
             const fieldErrors: string[] = [];
 
-            if (validator.min && strValue.length < validator.min) {
+            if (validator.min !== undefined && strValue.length < validator.min) {
               fieldErrors.push(`Minimum length is ${validator.min}`);
             }
-            if (validator.max && strValue.length > validator.max) {
+            if (validator.max !== undefined && strValue.length > validator.max) {
               fieldErrors.push(`Maximum length is ${validator.max}`);
             }
             if (validator.pattern && !validator.pattern.test(strValue)) {
@@ -187,6 +190,13 @@ export function schema<T extends Record<string, unknown>>(
           }
         }
 
+        // Allowed-values validation
+        if (validator.options && !errors[key]) {
+          if (!validator.options.includes(typedValue as string | number)) {
+            errors[key] = [`Must be one of: ${validator.options.join(", ")}`];
+          }
+        }
+
         // Custom validation
         if (validator.custom && !errors[key]) {
           const customError = validator.custom(typedValue);
@@ -207,4 +217,6 @@ export function schema<T extends Record<string, unknown>>(
       return { success: true, data: parsed as T };
     },
   };
+
+  return schemaObject;
 }
