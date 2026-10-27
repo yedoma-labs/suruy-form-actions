@@ -1,3 +1,15 @@
+# [0.2.0](https://github.com/yedoma-labs/suruy-form-actions/compare/v0.1.1...v0.2.0) (2026-10-27)
+
+
+### Bug Fixes
+
+* **deps:** update dependencies to latest ([#18](https://github.com/yedoma-labs/suruy-form-actions/issues/18)) ([71c7925](https://github.com/yedoma-labs/suruy-form-actions/commit/71c7925231dd63275f87581fe97921b31479f385))
+
+
+### Features
+
+* **schema:** add options constraint for allowed values ([f31dcf6](https://github.com/yedoma-labs/suruy-form-actions/commit/f31dcf63cafb42595785184366c1c31d47feb752))
+
 ## [0.1.1](https://github.com/yedoma-labs/suruy-form-actions/compare/v0.1.0...v0.1.1) (2026-10-10)
 
 ### Bug Fixes
