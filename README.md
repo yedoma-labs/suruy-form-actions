@@ -13,8 +13,6 @@
 [![License](https://img.shields.io/npm/l/@yedoma-labs/suruy-form-actions)](LICENSE)
 [![Bundle Size](https://img.shields.io/bundlephobia/minzip/@yedoma-labs/suruy-form-actions)](https://bundlephobia.com/package/@yedoma-labs/suruy-form-actions)
 
-> **suruy** (Yakut: суруй) — _verb._ write, inscribe
-
 Type-safe form library for React Server Actions with progressive enhancement
 
 ## Features
